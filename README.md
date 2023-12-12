@@ -98,3 +98,37 @@ kubectl create service clusterip auth --tcp=3002,3003 --dry-run=client -o yaml >
 kubectl create service nodeport reservations --tcp=3004 --dry-run=client -o yaml > templates/reservations/service.yaml
 
 helm upgrade sleepr .
+
+gcloud auth application-default login
+
+<!-- Connect Kubenetes Engine Clusters- COnnect -->
+
+gcloud container clusters get-credentials sleepr --region us-central1 --project sleepr-407812
+
+kubectl get namespaces
+kubectl get po -n kube-system
+
+# show context we use
+
+kubectl config get-contexts
+
+> Current gke_sleepr-407812_us-central1_sleepr
+> docker-desktop
+
+# change context
+
+kubectl config use-context docker-desktop
+
+> gke_sleepr-407812_us-central1_sleepr
+> Current docker-desktop
+
+# edit refreshToken of google in google secret:
+
+kubectl edit secret google
+
+convert string to base64: echo -n "Hello World!" | base64
+then edited, :wq exit
+
+kubectl rollout restart deployment notifications
+
+kubectl get ing
