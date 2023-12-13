@@ -13,8 +13,8 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('signIn')
   async signIn(@CurrentUser() user: UserDocument, @Res({ passthrough: true }) response: Response) {
-    await this.authService.signIn(user, response);
-    response.send(user);
+    const jwt = await this.authService.signIn(user, response);
+    response.send(jwt);
   }
 
   @UseGuards(JwtAuthGuard)
